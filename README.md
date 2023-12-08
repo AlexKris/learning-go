@@ -121,3 +121,51 @@
     - 代码难于理解
     - 跨语言构建难
 - gofmt，统一Go语言的代码风格
+
+## 编写程序
+
+### Hello World
+
+- 编写main.go
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello World")
+}
+```
+- 第一行`package`定义了Go中的一个包
+- 包是Go语言的基本组成单元，一个Go程序本质上是一组包的集合
+- `main`包是Go中一个特殊的包，整个Go程序中仅允许存在一个名为main的包
+- `main`包中主要代码是一个名为`main`的函数，当运行一个可执行的Go程序的时候，所有的代码都会从这个入口函数开始运行，第一行声明了一个名为`main`的没有任何参数和返回值的函数，如果需要给函数声明参数，必须放到圆括号`()`中
+- 花括号`{}`标记函数体
+- `fmt.Println("hello, world")`：将字符串输出到终端的表述输出（stdout）上
+> 1. 标准Go代码风格使用Tab而不是空格来实现缩进
+> 2. 调用的`Println`函数是Go标准库`fmt`包中的函数，要使用该包中的函数，首先需要在源文件开始处`import`声明导入`fmt`包的路径`import "fmt"`，然后在函数中通过限定标识符`fmt`调用`Println`函数，`import "fmt"`中的`fmt`是包的导入路径，表示的是标准库下的`fmt`目录，意思是导入标准库`fmt`目录下的包，`fmt.Println`中的`fmt`代表包名，**只有首字母为大写的标识符才是导出的，才对包外的代码可见**
+> 3. Go源代码文件使用的字符集是Unicode，并且使用的是UTF-8
+
+#### 编译
+
+- 运行时先进行编译
+```shell
+go build main.go
+```
+- 编译后，会在当前目录生成可执行文件`main*`
+> Windows系统下可执行文件为`.exe`结尾，其他系统则是没有后缀的可编译文件
+- 运行，可以直接运行可执行文件，也可以通过命令`go run *.go`与运行Go源代码文件
+
+### Go Module
+
+- Go Module，Go 1.11版本正式引入的彻底解决Go项目复杂版本依赖问题的构建模式
+- Go Module核心是go.mod文件，该文件中存储了module对第三方依赖的全部信息
+- 通过`init`命令生成go.mod文件
+```shell
+go mod init github.com/krs/go/hellomodule
+```
+- 编译时，需在go.mod中添加依赖，手动添加或者通过`go mod tidy`命令添加
+
+> Go包是Go语言的基本组成单元。一个Go程序就是一组包的集合，所有Go代码都位于包中
+> Go源码可以导入其他Go包，并使用其中的导出语法元素，包括类型、变量、函数、方法等，而且，main函数是整个Go应用的入口函数
+> Go源码需要先编译，再分发和运行。如果是单Go源文件的情况，我们可以直接使用go build命令+Go源文件名的方式编译。不过，对于复杂的Go项目，我们需要在Go Module的帮助下完成项目的构建
