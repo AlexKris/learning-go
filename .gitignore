@@ -3,6 +3,22 @@
 .AppleDouble
 .LSOverride
 
+# Ignore all
+*
+
+# Unignore files with specific extensions
+!*.gitignore
+!*.md
+!*.json
+!*.yaml
+!*.yml
+!*.go
+!*.mod
+!*.sum
+
+# Unignore directories
+!*/
+
 # Icon must end with two \r
 Icon
 
